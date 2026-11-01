@@ -52,8 +52,12 @@ export function OnboardingScreen({
   const hc = handleCheck(handle, wt.takenHandles);
   const nc = nickCheck(nick);
   const canNext2 = hc.state === "ok" && nc.state === "ok";
-  const finish = (skip: boolean) =>
+  // ?step= 으로 앞 단계를 건너뛰고 들어와도, 가입 전에 빠진 단계로 되돌린다
+  const finish = (skip: boolean) => {
+    if (!all) return setStep(1);
+    if (!canNext2) return setStep(2);
     wt.signup({ handle, nick, interests: skip ? [] : cats }, back);
+  };
   const tog = (c: CategoryId) =>
     setCats(
       cats.includes(c)
@@ -71,7 +75,8 @@ export function OnboardingScreen({
     msgState(s) === "err" ? "border-wine!" : s === "ok" ? "border-navy!" : "";
   return (
     <AuthCard wide data-component="onboarding" data-step={step}>
-      <div className="mb-6 flex gap-2" aria-label={`3단계 중 ${step}단계`}>
+      <div className="mb-6 flex gap-2">
+        <span className="sr-only">3단계 중 {step}단계</span>
         {["약관 동의", "아이디·닉네임", "관심 카테고리"].map((l, i) => (
           <div
             key={l}
@@ -131,7 +136,11 @@ export function OnboardingScreen({
                   </span>
                 </label>
                 {doc && (
-                  <RouteLink to={doc} className={linkClass}>
+                  <RouteLink
+                    to={doc}
+                    className={linkClass}
+                    aria-label={`${l} 보기`}
+                  >
                     보기
                   </RouteLink>
                 )}
@@ -276,6 +285,9 @@ export function OnboardingScreen({
             바꿀 수 있어요.
           </FieldMessage>
           <div className="flex gap-2">
+            <Button variant="ghost" size="lg" onClick={() => setStep(2)}>
+              이전
+            </Button>
             <Button variant="ghost" size="lg" onClick={() => finish(true)}>
               건너뛰기
             </Button>

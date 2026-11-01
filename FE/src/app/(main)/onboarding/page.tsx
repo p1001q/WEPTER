@@ -8,7 +8,7 @@ export default async function OnboardingPage({
 }) {
   const sp = await searchParams;
   const back = firstParam(sp.back);
-  const step = Number(firstParam(sp.step)) || 1;
+  const step = Math.trunc(Number(firstParam(sp.step))) || 1;
   return (
     <OnboardingScreen
       key={`${back}|${step}`}
