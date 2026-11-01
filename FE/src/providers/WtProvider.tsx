@@ -241,6 +241,11 @@ export function WtProvider({
       toast(to ? "로그인했어요. 보던 페이지로 돌아왔어요." : "로그인했어요.");
     },
     signup: async (data, backPath) => {
+      if (me) {
+        go("home");
+        toast("이미 로그인되어 있어요.");
+        return;
+      }
       const r = await api.signup({
         handle: data.handle,
         nick: data.nick,
