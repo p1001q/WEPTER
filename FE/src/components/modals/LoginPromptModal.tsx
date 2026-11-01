@@ -29,8 +29,7 @@ export function LoginPromptModal({
       <p>
         {reason || "이 기능은 로그인한 회원만 이용할 수 있어요."}
         <br />
-        구글 또는 카카오 계정으로 바로 시작할 수 있고, 로그인 후 보던 페이지로
-        돌아와요.
+        구글 계정으로 바로 시작할 수 있고, 로그인 후 보던 페이지로 돌아와요.
       </p>
       <div className={modalActionsClass}>
         <Button variant="ghost" className={modalActionButton} onClick={onClose}>
