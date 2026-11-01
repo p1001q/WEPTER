@@ -5,6 +5,7 @@ import { Wordmark } from "@/components/layout/Wordmark";
 import { Button } from "@/components/ui/Button";
 import { boxClass } from "@/components/ui/box";
 import { helpClass } from "@/components/ui/field";
+import { safeBackPath } from "@/lib/routes";
 import { useWt } from "@/providers/context";
 import { AuthCard, authSubClass } from "../../_components/AuthCard";
 
@@ -71,7 +72,7 @@ export function LoginScreen({ back }: { back?: string }) {
           </div>
         </div>
       )}
-      {back && (
+      {safeBackPath(back) && (
         <p className={`${helpClass} mt-1.5 text-center`}>
           로그인 후 보던 페이지로 돌아가요.
         </p>
